@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+# Cargo passes the subcommand name as first arg
+[[ "${1:-}" == "lint" ]] && shift
+
+cargo dequalify -w --allow-dirty
+cargo pedantic-lite --allow-dirty "$@"
+cargo clippy --fix --allow-dirty --all-targets --workspace "$@"
+cargo myfmt
