@@ -87,7 +87,14 @@ exit 0
 EOF
 chmod +x "$mock_bin/cargo"
 export CARGO_TEST_LOG="$tmp_dir/cargo.log"
-PATH="$mock_bin:$PATH" "$skill/scripts/run.sh" --workspace 2>"$tmp_dir/run.err"
+dirty_workspace="$tmp_dir/dirty-workspace"
+mkdir "$dirty_workspace"
+git -C "$dirty_workspace" init -q
+touch "$dirty_workspace/untracked"
+(
+  cd "$dirty_workspace"
+  PATH="$mock_bin:$PATH" "$skill/scripts/run.sh" --workspace 2>"$tmp_dir/run.err"
+)
 grep -Fx -- '--version' "$CARGO_TEST_LOG"
 grep -Fx -- 'clippy --version' "$CARGO_TEST_LOG"
 grep -Fx -- '+nightly fmt --version' "$CARGO_TEST_LOG"
