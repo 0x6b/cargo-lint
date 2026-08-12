@@ -30,6 +30,12 @@ Put the script on your `PATH`. Cargo discovers executables named `cargo-<name>` 
 $ ln -s "$(pwd)/cargo-lint" ~/.local/bin/cargo-lint
 ```
 
+### Amp orb bundle
+
+Tagged releases provide one checksum-pinned bundle for Amp orbs. The supported environment is Debian 12 on Linux x86_64 with glibc 2.36 or newer. The bundle contains `cargo-lint`, `cargo-dequalify`, `cargo-pedantic-lite`, and `cargo-myfmt`; macOS, Windows, ARM, and musl are not release targets.
+
+The bundled wrappers still require Cargo, Clippy, and nightly rustfmt at runtime. The Amp skill in [`.agents/skills/linting-rust-projects`](.agents/skills/linting-rust-projects) checks these prerequisites, downloads the fixed release, verifies its SHA-256 checksum and cached files, and adds its `bin` directory to `PATH` only while running `cargo lint`.
+
 ## Usage
 
 ```console
@@ -37,6 +43,21 @@ $ cargo lint
 ```
 
 Extra arguments are forwarded unchanged to both `cargo pedantic-lite` and `cargo clippy`.
+
+> [!WARNING]
+> `cargo lint` rewrites the working tree and deliberately passes `--allow-dirty`. Review `git diff` after it runs.
+
+## Release process
+
+[`release/versions.env`](release/versions.env) pins the Rust toolchain and the complete Git commit SHA of each bundled Cargo subcommand. Build the deterministic archive, record its checksum in both the release checksum file and the skill configuration, then verify it:
+
+```console
+$ scripts/build-release-bundle.sh dist
+$ scripts/verify-release-bundle.sh dist
+$ tests/skill.sh
+```
+
+Pushing the matching version tag runs the release workflow and publishes the pre-verified archive plus `SHA256SUMS`. Published release assets must not be replaced; updates use a new version and checksum.
 
 ## License
 
