@@ -12,10 +12,10 @@ Run the pinned `cargo-lint` bundle without compiling its Cargo subcommands durin
 
 1. Tell the user that this command modifies the working tree. It runs dequalify, two Clippy fix passes, and nightly rustfmt, including when the tree is already dirty.
 2. Do not stash, reset, restore, or commit existing changes.
-3. From the Rust workspace root, run:
+3. From the Rust workspace root, run the bundled `scripts/run.sh` using its absolute path in this skill directory. Do not look for the script in the Rust project. For example:
 
    ```console
-   .agents/skills/linting-rust-projects/scripts/run.sh
+   /path/to/linting-rust-projects/scripts/run.sh
    ```
 
    Pass requested Cargo/Clippy arguments after the script name. The runner adds the verified bundle directory to `PATH` only for this invocation.

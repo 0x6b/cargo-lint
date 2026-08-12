@@ -34,7 +34,7 @@ $ ln -s "$(pwd)/cargo-lint" ~/.local/bin/cargo-lint
 
 Tagged releases provide one checksum-pinned bundle for Amp orbs. The supported environment is Debian 12 on Linux x86_64 with glibc 2.36 or newer. The bundle contains `cargo-lint`, `cargo-dequalify`, `cargo-pedantic-lite`, and `cargo-myfmt`; macOS, Windows, ARM, and musl are not release targets.
 
-The bundled wrappers still require Cargo, Clippy, and nightly rustfmt at runtime. The Amp skill in [`.agents/skills/linting-rust-projects`](.agents/skills/linting-rust-projects) checks these prerequisites, downloads the fixed release, verifies its SHA-256 checksum and cached files, and adds its `bin` directory to `PATH` only while running `cargo lint`.
+The bundled wrappers still require Cargo, Clippy, and nightly rustfmt at runtime. The Amp skill in [`.agents/skills/linting-rust-projects`](.agents/skills/linting-rust-projects) checks these prerequisites, downloads the fixed release, verifies its SHA-256 checksum and cached files, and adds its `bin` directory to `PATH` only while running `cargo lint`. The skill directory can also be published unchanged as a top-level `linting-rust-projects` Global User Skill for use from other Rust repositories.
 
 ## Usage
 
