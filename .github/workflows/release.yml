@@ -44,9 +44,9 @@ jobs:
       - name: Upload workflow artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: cargo-lint-v0.1.0-x86_64-unknown-linux-gnu
+          name: cargo-lint-v0.1.1-x86_64-unknown-linux-gnu
           path: |
-            dist/cargo-lint-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+            dist/cargo-lint-v0.1.1-x86_64-unknown-linux-gnu.tar.gz
             dist/SHA256SUMS
           if-no-files-found: error
 
@@ -66,7 +66,7 @@ jobs:
       - name: Download verified bundle
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
-          name: cargo-lint-v0.1.0-x86_64-unknown-linux-gnu
+          name: cargo-lint-v0.1.1-x86_64-unknown-linux-gnu
           path: dist
 
       - name: Publish GitHub Release
@@ -77,5 +77,5 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --verify-tag \
             --generate-notes \
-            dist/cargo-lint-v0.1.0-x86_64-unknown-linux-gnu.tar.gz \
+            dist/cargo-lint-v0.1.1-x86_64-unknown-linux-gnu.tar.gz \
             dist/SHA256SUMS
